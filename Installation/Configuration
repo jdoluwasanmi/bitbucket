@@ -1,0 +1,52 @@
+BITBUCKET/GIT VERSION 2 4
+
+first of all Install git
+
+sudo yum -y install https://packages.endpoint.com/rhel/7/os/x86_64/endpoint-repo-1.7-1.x86_64.rpm
+
+sudo yum install git -y
+
+then, install bitbucket
+
+wget https://www.atlassian.com/software/stash/downloads/binary/atlassian-bitbucket-7.2.3-x64.bin
+
+chmod +x atlassian-bitbucket-7.2.3-x64.bin 
+
+./atlassian-bitbucket-7.2.3-x64.bin 
+
+sudo yum install https://download.postgresql.org/pub/repos/yum/10/redhat/rhel-7-x86_64/pgdg-redhat-repo-latest.noarch.rpm -y
+
+sudo yum install postgresql10-server -y
+
+sudo /usr/pgsql-10/bin/postgresql-10-setup initdb
+
+vim /var/lib/pgsql/10/data/pg_hba.conf
+
+sudo systemctl start postgresql-10
+
+sudo systemctl enable postgresql-10
+
+sudo passwd postgres
+
+su - postgres
+
+psql
+
+CREATE SCHEMA bitbucket;
+
+CREATE USER bitbucketuser PASSWORD 'bitbucketdbpassword';
+
+GRANT ALL ON SCHEMA bitbucket TO bitbucketuser;
+
+GRANT ALL ON ALL TABLES IN SCHEMA bitbucket TO bitbucketuser;
+
+CREATE DATABASE bitbucket WITH ENCODING='UTF8' OWNER=bitbucketuser CONNECTION LIMIT=-1;
+\q
+exit
+
+systemctl restart postgresql-10
+
+Open 
+http://bitbucket.comm:7990
+
+
